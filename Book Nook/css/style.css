@@ -1,0 +1,59 @@
+body {
+  background-color: #d9d9d9;
+}
+.navbar {
+  background-color: #d9d9d9;
+}
+.navbar-brand img {
+  max-height: 50px;
+}
+.nav-link {
+  text-transform: uppercase;
+  color: #362828;
+  font-weight: 700;
+}
+.slogan h2 {
+  color: #63514f;
+  letter-spacing: 2px;
+  word-spacing: 10px;
+}
+.search input {
+  height: 50px;
+  font-size: 1.2rem;
+  border: solid 2px #63514f;
+  color: #63514f;
+  border-radius: 15px;
+}
+.search input::placeholder {
+  color: #63514f;
+  font-size: 1.2rem;
+}
+.search input:focus {
+  border: solid 2px #63514f;
+  box-shadow: 0 0 8px #63514f;
+  outline: none;
+  color: #63514f !important;
+}
+.search .fa-magnifying-glass {
+  color: #63514f;
+}
+.search-result .card {
+  border: solid 2px #63514f;
+}
+.search-result .card img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+.search-result .card .card-image-container{
+    height: 200px;
+}
+
+.card-text.truncate {
+    flex-grow: 1; /* Take remaining space */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+    display: -webkit-box; /* Enable multi-line truncation */
+    -webkit-line-clamp: 3; /* Number of lines to show before truncating */
+    -webkit-box-orient: vertical; /* Set box orientation to vertical */
+  }
