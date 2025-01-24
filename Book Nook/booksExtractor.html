@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Title Extractor</title>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js/dist/tesseract.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      background-color: #007bff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      margin: 0 10px;
+    }
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+    .navbar .title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    #output {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="title">Book Nook</div>
+    <div>
+      <!-- Functional links to other pages -->
+      <a href="booksSearch.html">Books Search</a>
+      <a href="MainView.html">Added Books</a>
+      <a href="booksExtractor.html">Books Extractor</a>
+    </div>
+  </div>
+
+  <h1>Book Title Extractor</h1>
+  <p>Upload multiple book cover images to extract their titles:</p>
+  <input type="file" id="imageInput" accept="image/*" multiple />
+  
+  <div id="output">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Image Preview</th>
+          <th>Extracted Title</th>
+        </tr>
+      </thead>
+      <tbody id="resultsTable">
+        <!-- Extracted results will appear here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const resultsTable = document.getElementById('resultsTable');
+
+    imageInput.addEventListener('change', async (event) => {
+      const files = event.target.files;
+
+      if (!files.length) return;
+
+      resultsTable.innerHTML = ''; // Clear the table for new uploads
+
+      Array.from(files).forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = async () => {
+          const imgData = reader.result;
+
+          // Create a new row in the table
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
+            <td>${index + 1}</td>
+            <td><img src="${imgData}" alt="Book Cover" style="height: 100px;"></td>
+            <td>Processing...</td>
+          `;
+          resultsTable.appendChild(newRow);
+
+          // Extract text using Tesseract.js
+          try {
+            const { data: { text } } = await Tesseract.recognize(imgData, 'eng');
+            newRow.cells[2].innerText = text.trim() || 'No text detected';
+          } catch (error) {
+            newRow.cells[2].innerText = 'Error processing image';
+            console.error('OCR Error:', error);
+          }
+        };
+
+        reader.readAsDataURL(file); // Read the image as a data URL
+      });
+    });
+
+    // Add active link functionality in navbar
+    const navbarLinks = document.querySelectorAll('.navbar a');
+    navbarLinks.forEach(link => {
+      if (link.href === window.location.href) {
+        link.style.fontWeight = 'bold';
+        link.style.textDecoration = 'underline';
+      }
+    });
+  </script>
+</body>
+</html>

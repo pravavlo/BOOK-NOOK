@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #007bff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .navbar .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .book-card {
+            display: flex;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .book-card img {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        .book-details {
+            flex-grow: 1;
+        }
+        .add-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .add-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="title">Book Nook</div>
+        <div>
+            <a href="booksSearch.html">Books Search</a>
+            <a href="MainView.html">Added Books</a>
+            <a href="booksExtractor.html">Books Extractor</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Book Search</h1>
+        <input type="text" id="search-input" placeholder="Search books..." style="width: 100%; padding: 10px; margin-bottom: 20px;">
+        <button id="search-btn" style="padding: 10px 15px;">Search</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const searchBtn = document.getElementById('search-btn');
+        const searchInput = document.getElementById('search-input');
+        const resultsDiv = document.getElementById('results');
+
+        searchBtn.addEventListener('click', () => {
+    const query = searchInput.value;
+    if (query.trim() === '') return;
+
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            resultsDiv.innerHTML = ''; // Clear previous results
+
+            if (data.items && data.items.length > 0) {
+                data.items.forEach(book => {
+                    const bookCard = document.createElement('div');
+                    bookCard.className = 'book-card';
+
+                    const bookImage = book.volumeInfo.imageLinks
+                        ? book.volumeInfo.imageLinks.thumbnail
+                        : 'https://via.placeholder.com/80x120';
+
+                    let description = book.volumeInfo.description || 'No description available';
+                    const maxChar = 150; // Maximum characters for the truncated description
+                    const isTruncated = description.length > maxChar;
+                    const truncatedDescription = isTruncated
+                        ? description.substring(0, maxChar) + '...'
+                        : description;
+
+                    bookCard.innerHTML = `
+                        <img src="${bookImage}" alt="${book.volumeInfo.title}">
+                        <div class="book-details">
+                            <h3>${book.volumeInfo.title}</h3>
+                            <p>${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author'}</p>
+                            <p>${book.volumeInfo.publishedDate || 'No Date'}</p>
+                            <p>${book.volumeInfo.pageCount || 'N/A'} pages</p>
+                            <p class="description">
+                                <span class="short-desc">${truncatedDescription}</span>
+                                ${isTruncated ? `<span class="full-desc" style="display:none;">${description}</span>` : ''}
+                                ${isTruncated ? '<button class="read-more-btn">Read More</button>' : ''}
+                            </p>
+                            <button class="add-btn" 
+                                data-title="${book.volumeInfo.title}" 
+                                data-author="${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author'}"
+                                data-description="${description}" 
+                                data-page="${book.volumeInfo.pageCount || 'N/A'}"
+                                data-img="${bookImage}">
+                                Add Book
+                            </button>
+                        </div>
+                    `;
+
+                    resultsDiv.appendChild(bookCard);
+                });
+
+                // Add click event listeners for "Read More" buttons
+                document.querySelectorAll('.read-more-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const shortDesc = btn.previousElementSibling.previousElementSibling;
+                        const fullDesc = btn.previousElementSibling;
+                        const isExpanded = fullDesc.style.display === 'inline';
+
+                        if (isExpanded) {
+                            fullDesc.style.display = 'none';
+                            shortDesc.style.display = 'inline';
+                            btn.textContent = 'Read More';
+                        } else {
+                            fullDesc.style.display = 'inline';
+                            shortDesc.style.display = 'none';
+                            btn.textContent = 'Read Less';
+                        }
+                    });
+                });
+
+                // Add click event listeners to "Add Book" buttons
+                document.querySelectorAll('.add-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const bookData = {
+                            title: btn.getAttribute('data-title'),
+                            author: btn.getAttribute('data-author'),
+                            img: btn.getAttribute('data-img'),
+                            description: btn.getAttribute('data-description'),
+                            pageCount: btn.getAttribute('data-page')
+                        };
+
+                        // Save the book to localStorage for transfer to MainView.html
+                        const storedBooks = JSON.parse(localStorage.getItem('books')) || [];
+                        storedBooks.push(bookData);
+                        localStorage.setItem('books', JSON.stringify(storedBooks));
+
+                        alert(`Book "${bookData.title}" added to MainView!`);
+                    });
+                });
+            } else {
+                resultsDiv.innerHTML = '<p>No books found.</p>';
+            }
+        });
+});
+
+    </script>
+</body>
+</html>

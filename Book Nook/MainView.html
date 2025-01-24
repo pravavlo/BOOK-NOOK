@@ -1,0 +1,103 @@
+
+
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #007bff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .navbar .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .book-list {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .book-card {
+            display: flex;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .book-card img {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        .book-details {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="title">Book Nook</div>
+        <div>
+            <a href="booksSearch.html">Books Search</a>
+            <a href="MainView.html" class="active"> Added Books</a>
+            <a href="booksExtractor.html">Books Extractor</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="book-list">
+        <h1>Added Books</h1>
+        <div id="book-list"></div>
+    </div>
+
+    <script>
+        const bookListDiv = document.getElementById('book-list');
+
+        // Load books from localStorage
+        const storedBooks = JSON.parse(localStorage.getItem('books')) || [];
+
+        if (storedBooks.length > 0) {
+            storedBooks.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+
+                bookCard.innerHTML = `
+                    <img src="${book.img}" alt="${book.title}">
+                    <div class="book-details">
+                        <h3>${book.title}</h3>
+                        <p>${book.author || 'Unknown Author'}</p>
+                        <p>${book.pageCount}</p>
+                        <P>${book.description || '-'}</p>
+                    </div>
+                `;
+
+                bookListDiv.appendChild(bookCard);
+            });
+        } else {
+            bookListDiv.innerHTML = '<p>No books added yet.</p>';
+        }
+    </script>
+</body>
+</html>
