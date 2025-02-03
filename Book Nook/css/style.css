@@ -17,23 +17,7 @@ body {
   letter-spacing: 2px;
   word-spacing: 10px;
 }
-.search input {
-  height: 50px;
-  font-size: 1.2rem;
-  border: solid 2px #63514f;
-  color: #63514f;
-  border-radius: 15px;
-}
-.search input::placeholder {
-  color: #63514f;
-  font-size: 1.2rem;
-}
-.search input:focus {
-  border: solid 2px #63514f;
-  box-shadow: 0 0 8px #63514f;
-  outline: none;
-  color: #63514f !important;
-}
+
 .search .fa-magnifying-glass {
   color: #63514f;
 }
@@ -49,7 +33,7 @@ body {
     height: 200px;
 }
 
-.card-text.truncate {
+.truncate {
     flex-grow: 1; /* Take remaining space */
     overflow: hidden; /* Hide overflow */
     text-overflow: ellipsis; /* Show ellipsis for overflowed text */
@@ -57,3 +41,65 @@ body {
     -webkit-line-clamp: 3; /* Number of lines to show before truncating */
     -webkit-box-orient: vertical; /* Set box orientation to vertical */
   }
+
+  .loader {
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #63514f;
+    width: 70px;
+    height: 70px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+
+  .book-extractor-loader {
+    border: 2px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 2px solid #63514f;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+.table-row-border-bottom{
+  border-bottom: 1px solid #63514f;;
+}
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .output-container{
+    border-radius: 15px;
+    background-color: #ffffff;
+  }
+
+/* BOOK LIST CSS */
+.book-list {
+  max-width: 800px;
+  margin: 20px auto;
+}
+.book-card {
+  background-color: #ffffff;
+  display: flex;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.book-card img {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+.book-details {
+  flex-grow: 1;
+}

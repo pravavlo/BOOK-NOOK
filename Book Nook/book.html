@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FlexLibrary - Homepage</title>
+    <title>FlexLibrary - Book</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -52,45 +52,37 @@
     </nav>
 
     <div class="container-fluid px-5">
-      <div class="row py-5 slogan">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
-          <h2 class="fw-bold">Read, Return, Repeat</h2>
-          <h2 class="fw-bold text-end">Your Library, Your Way!</h2>
+      <div class="row g-0">
+        <div class="col-md-4 text-center p-2">
+          <img
+            src="https://placehold.co/600x400/orange/white"
+            class="img-fluid rounded-start book-thumbnail"
+            alt="..."
+          />         
+        </div>
+        <div class="col-md-8 p-2">
+          
+          <div class="text-end btn-remove">
+            <button class="btn btn-danger btn-sm">Remove</button>
+          </div>
+          <h5 class="book-title">Card title</h5>
+          <p class="">
+            <small class="text-body-secondary book-author">Last updated 3 mins ago</small>
+          </p>
+          <p >
+            <small class="text-body-secondary book-page-count">Last updated 3 mins ago</small> <small>pages</small>
+          </p>
+          <hr>
+          <p class="book-description">
+            This is a wider card with supporting text below as a natural lead-in
+            to additional content. This content is a little bit longer.
+          </p>
+          
         </div>
       </div>
-
-      <div class="row search">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-          <form id="formSubmit">
-            <div class="form-group position-relative">
-              <input
-                class="form-control"
-                id="searchInput"
-                placeholder="Enter book name..."
-              /><i
-                  class="fa-solid fa-magnifying-glass position-absolute top-50 start-100 translate-middle pe-5"
-                  id="search-btn" 
-                ></i>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div class="row py-5">
-        <div class="loader-container d-none justify-content-center col-sm-12 p-5 mt-5">
-          <div class="loader"></div>
-        </div>
-        <div class="col-sm-12">
-          <div class="row g-3 search-result" id="searchResult"></div>
-        </div>
-      </div>
-
     </div>
-
-    <script src="./js/index.js"></script>
     <script src="./js/script.js"></script>
+    <script src="./js/book.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

@@ -2,8 +2,54 @@
     background-color: #63514f;
     border-color: #63514f;
 }
+.btn-outline-primary{
+    border: solid 2px #63514f;
+    border-radius: 15px;
+    color: #63514f;
+    background-color: #ffffff;
+    border-color: #63514f;
+}
+.btn-outline-primary:hover{
+    background-color: #63514f;
+    color: #ffffff;
+    border-color: #63514f;
+}
+
+.btn-outline-danger{
+    font-weight: 700;
+    padding-inline: 2rem;
+    border: solid 2px #9d0000;
+    border-radius: 15px;
+    color: #9d0000;
+    background-color: #ffffff;
+    border-color: #9d0000;
+}
+.btn-outline-danger:hover{
+    background-color: #9d0000;
+    color: #ffffff;
+    border-color: #9d0000;
+    box-shadow: 0 0 2px #9d0000;
+}
+
 .btn-primary:hover{
     background-color: #63514f;
     border-color: #63514f;
     box-shadow: 0 0 2px #63514f;
+}
+input {
+    height: 50px !important;
+    font-size: 1.2rem !important;
+    border: solid 2px #63514f !important;
+    color: #63514f !important;
+    border-radius: 15px !important;
+  }
+input::placeholder {
+    color: #63514f !important;
+    font-size: 1.2rem !important;
+  }
+input:focus {
+    border: solid 2px #63514f !important;
+    box-shadow: 0 0 8px #63514f !important;
+    outline: none !important;
+    color: #63514f !important;
 }
