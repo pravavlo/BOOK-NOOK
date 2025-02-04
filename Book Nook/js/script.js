@@ -7,7 +7,8 @@ navbarLinks.forEach((link) => {
   }
 });
 
-const baseUrl = "file:///C:/All%20Files/FlexTecs/BOOK-NOOK/Book%20Nook/";
+//const baseUrl = "file:///C:/All%20Files/FlexTecs/BOOK-NOOK/Book%20Nook/";
+const baseUrl = window.location.hostname
 
 function viewBook(isFromIndex, event, index) {
   if (isFromIndex) {
