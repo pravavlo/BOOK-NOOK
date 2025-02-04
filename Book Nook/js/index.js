@@ -3,6 +3,7 @@ const searchBtn = document.getElementById("formSubmit");
 const searchInput = document.getElementById("searchInput");
 const resultsDiv = document.getElementById("searchResult");
 const searchButton = document.getElementById("search-btn");
+const API_KEY = typeof DEV_GOOGLE_API_KEY !== "undefined" ? Prod_GOOGLE_API_KEY : GOOGLE_API_KEY;
 const booksFromLocalStorage = JSON.parse(localStorage.getItem("books")) || [];
 document.addEventListener("DOMContentLoaded", () => {
   searchInput.value = sessionStorage.getItem("searchQuery") || "";
@@ -21,7 +22,7 @@ const handleSubmit = (event) => {
     .querySelector(".loader-container")
     .classList.replace("d-none", "d-flex");
 
-  fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}`)
+  fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${API_KEY}`)
     .then((response) => response.json())
     .then((data) => {
       resultsDiv.innerHTML = "";
