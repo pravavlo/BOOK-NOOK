@@ -22,6 +22,8 @@ const handleSubmit = (event) => {
     .querySelector(".loader-container")
     .classList.replace("d-none", "d-flex");
  if (API_KEY != "production run"){
+  // uncomment the commented fetch google api wehn u dont have hte key else proceed accordingly
+  //fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`)
   fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${API_KEY}`)
     .then((response) => response.json())
     .then((data) => {
