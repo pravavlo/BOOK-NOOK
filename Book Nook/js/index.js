@@ -1,3 +1,4 @@
+
 const searchBtn = document.getElementById("formSubmit");
 const searchInput = document.getElementById("searchInput");
 const resultsDiv = document.getElementById("searchResult");
@@ -20,9 +21,7 @@ const handleSubmit = (event) => {
     .querySelector(".loader-container")
     .classList.replace("d-none", "d-flex");
 
-  fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`
-  )
+  fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}`)
     .then((response) => response.json())
     .then((data) => {
       resultsDiv.innerHTML = "";
