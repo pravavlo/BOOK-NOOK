@@ -1,9 +1,9 @@
-
+var Prod_GOOGLE_API_KEY  ; 
 const searchBtn = document.getElementById("formSubmit");
 const searchInput = document.getElementById("searchInput");
 const resultsDiv = document.getElementById("searchResult");
 const searchButton = document.getElementById("search-btn");
-const API_KEY = typeof DEV_GOOGLE_API_KEY !== "undefined" ? Prod_GOOGLE_API_KEY : GOOGLE_API_KEY;
+const API_KEY = typeof GOOGLE_API_KEY !== "undefined" ? GOOGLE_API_KEY : "{{Prod_GOOGLE_API_KEY}}";
 const booksFromLocalStorage = JSON.parse(localStorage.getItem("books")) || [];
 document.addEventListener("DOMContentLoaded", () => {
   searchInput.value = sessionStorage.getItem("searchQuery") || "";
