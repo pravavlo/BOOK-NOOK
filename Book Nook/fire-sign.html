@@ -1,0 +1,61 @@
+<script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+<link rel="stylesheet" type="text/css" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+
+
+
+<div class="container">
+    <div class="row p-5">
+        <div class="col-sm-12">
+            <button class="btn btn-danger btn-sm w-100" onclick="googleSignIn()">Sign in with Google</button>
+        </div>
+    </div>
+</div>
+<!-- Firebase SDK (Ensure consistent version) -->
+<script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+   
+    // Firebase Config
+    const firebaseConfig = {
+  apiKey: firebaseConfigValue.apiKey,
+  authDomain: firebaseConfigValue.authDomain,
+  projectId: firebaseConfigValue.projectId,
+  storageBucket: firebaseConfigValue.storageBucket,
+  messagingSenderId: firebaseConfigValue.messagingSenderId,
+  appId: firebaseConfigValue.appId,
+  measurementId: firebaseConfigValue.measurementId
+};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    setPersistence(auth, browserSessionPersistence)
+    .then(() => {
+        console.log("Persistence set to session-only.");
+    })
+    .catch(error => {
+        console.error("Error setting persistence:", error.message);
+    });
+
+// Automatically sign out the user when the page loads or reloads
+window.onload = function () {
+    signOut(auth).then(() => {
+        console.log("User signed out automatically on page load.");
+    }).catch(error => {
+        console.error("Error signing out:", error.message);
+    });
+};
+
+window.googleSignIn = function () {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+        .then(result => {
+            console.log("User signed in with Google:", result.user);
+        })
+        .catch(error => {
+            console.error("Error:", error.message);
+        });
+};
+</script>
