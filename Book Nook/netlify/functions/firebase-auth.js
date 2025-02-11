@@ -1,4 +1,5 @@
 // netlify/functions/firebase-auth.js
+
 exports.handler = async (event, context) => {
     const firebaseConfig = {
       apiKey: process.env.FIREBASE_API_KEY,

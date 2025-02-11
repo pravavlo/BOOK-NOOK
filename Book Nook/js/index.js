@@ -280,13 +280,11 @@ formSubmit.addEventListener("submit", (event) => {
 
 
 if (API_KEY == "production run") {
-  fetch("/.netlify/functions/firebase-auth")
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to fetch Firebase config: ${response.statusText}`);
-      }
-      return response.json();
-    })
+  import("/.netlify/functions/firebase-auth.js")
+  .then(module => {
+      console.log("Production mode: Firebase auth loaded from Netlify.");
+      window.googleSignIn = module.googleSignIn;  // Expose googleSignIn globally
+  })
     .then(config => {
       firebaseConfig = config;
       // Initialize Firebase
