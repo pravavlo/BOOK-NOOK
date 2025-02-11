@@ -21,7 +21,7 @@ setPersistence(auth, browserSessionPersistence)
     .catch(error => console.error("Error setting persistence:", error.message));
 
 // Google Sign-In Function
-export function googleSignIn() {
+ window.googleSignIn() = function() {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
 
