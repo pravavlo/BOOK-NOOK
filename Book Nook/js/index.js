@@ -15,9 +15,20 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 if (API_KEY == "production run") {
-  import("/.netlify/functions/firebase-auth.js")
-        .then(() => console.log("Production mode: Firebase auth loaded from Netlify."))
-        .catch(error => console.error("Failed to load Firebase auth from Netlify:", error));
+  fetch("/.netlify/functions/firebase-auth")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch Firebase config: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(config => {
+      firebaseConfig = config;
+      initializeFirebaseApp(firebaseConfig);
+    })
+    .catch(error => {
+      console.error("Failed to load Firebase auth from Netlify:", error);
+    });
 
 } else {
 
