@@ -106,7 +106,7 @@
                         ? book.volumeInfo.imageLinks.thumbnail
                         : 'https://via.placeholder.com/80x120';
 
-                    let description = book.volumeInfo.description || 'No description available';
+                   
                     const maxChar = 150; // Maximum characters for the truncated description
                     const isTruncated = description.length > maxChar;
                     const truncatedDescription = isTruncated
@@ -165,7 +165,7 @@
                             title: btn.getAttribute('data-title'),
                             author: btn.getAttribute('data-author'),
                             img: btn.getAttribute('data-img'),
-                            description: btn.getAttribute('data-description'),
+                        
                             pageCount: btn.getAttribute('data-page')
                         };
 

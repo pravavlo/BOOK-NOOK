@@ -74,9 +74,7 @@ const handleSubmit = (event) => {
                       </small>
                   </div>
 
-                  <small class="card-text truncate">
-                    ${description}
-                  </small>
+                
                   <div class="row">
                     <div class="col-6">
                       <a href="#" class="btn btn-primary btn-sm w-100 text-nowrap" book-title="${
@@ -142,27 +140,7 @@ const handleSubmit = (event) => {
           });
         });
 
-        // Add click event listeners to "Add Book" buttons
-        // document.querySelectorAll(".add-btn").forEach((btn) => {
-        //   btn.addEventListener("click", () => {
-        //     const bookData = {
-        //       title: btn.getAttribute("data-title"),
-        //       author: btn.getAttribute("data-author"),
-        //       img: btn.getAttribute("data-img"),
-        //       description: btn.getAttribute("data-description"),
-        //       pageCount: btn.getAttribute("data-page"),
-        //     };
-
-        //     // Save the book to localStorage for transfer to MainView.html
-        //     const storedBooks = JSON.parse(localStorage.getItem("books")) || [];
-        //     storedBooks.push(bookData);
-        //     localStorage.setItem("books", JSON.stringify(storedBooks));
-
-        //     alert(`Book "${bookData.title}" added to MainView!`);
-        //     btn.innerHTML="Remove"
-        //     btn.classList.replace("btn-primary", "btn-danger")
-        //   });
-        // });
+ 
       } else {
         resultsDiv.innerHTML = "<p>Results found: 0</p>";
       }
@@ -319,6 +297,14 @@ formSubmit.addEventListener("submit", (event) => {
 });
 
 
+if (API_KEY != "production run"){
+  const script = document.createElement("script");
+    script.src = "/.netlify/functions/firebase-auth.js";
+    script.defer = true;
+    document.head.appendChild(script);
+
+}else{
+
       const firebaseConfig = {
         apiKey: firebaseConfigValue.apiKey,
         authDomain: firebaseConfigValue.authDomain,
@@ -370,3 +356,4 @@ window.googleSignIn = function () {
             console.error("Error:", error.message);
         });
 };
+}

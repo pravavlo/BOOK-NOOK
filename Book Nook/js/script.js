@@ -17,7 +17,6 @@ function viewBook(isFromIndex, event, index) {
       title: event.target.getAttribute("book-title"),
       author: event.target.getAttribute("book-author"),
       img: event.target.getAttribute("book-thumbnail"),
-      description: event.target.getAttribute("book-description"),
       pageCount: event.target.getAttribute("book-page-count"),
     };
     sessionStorage.setItem("viewBook", JSON.stringify(bookData));
@@ -55,7 +54,6 @@ function addOrRemoveBook(isFromIndex, event, index) {
     title: event.target.getAttribute("book-title"),
     author: event.target.getAttribute("book-author"),
     img: event.target.getAttribute("book-thumbnail"),
-    description: event.target.getAttribute("book-description"),
     pageCount: event.target.getAttribute("book-page-count"),
   };
   //Save the book to localStorage for transfer to MainView.html
