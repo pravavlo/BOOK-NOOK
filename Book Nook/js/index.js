@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, setPersistence,
-  browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, setPersistence,
+  browserSessionPersistence
+} from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
 const searchBtn = document.getElementById("formSubmit");
 const searchInput = document.getElementById("searchInput");
 const resultsDiv = document.getElementById("searchResult");
@@ -23,37 +25,36 @@ const handleSubmit = (event) => {
   document
     .querySelector(".loader-container")
     .classList.replace("d-none", "d-flex");
- if (API_KEY != "production run"){
-  // uncomment the commented fetch google api wehn u dont have hte key else proceed accordingly
-  //fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`)
-  fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${API_KEY}`)
-    .then((response) => response.json())
-    .then((data) => {
-      resultsDiv.innerHTML = "";
-      document
-        .querySelector(".loader-container")
-        .classList.replace("d-flex", "d-none");
-      // Clear previous results
-      if (data.items && data.items.length > 0) {
-        data.items.forEach((book, index) => {
-          const bookCard = document.createElement("div");
-          bookCard.className = "col-sm-4";
-          const bookImage = book.volumeInfo.imageLinks
-            ? book.volumeInfo.imageLinks.thumbnail
-            : "https://via.placeholder.com/80x120";
+  if (API_KEY != "production run") {
+    // uncomment the commented fetch google api wehn u dont have hte key else proceed accordingly
+    //fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`)
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${API_KEY}`)
+      .then((response) => response.json())
+      .then((data) => {
+        resultsDiv.innerHTML = "";
+        document
+          .querySelector(".loader-container")
+          .classList.replace("d-flex", "d-none");
+        // Clear previous results
+        if (data.items && data.items.length > 0) {
+          data.items.forEach((book, index) => {
+            const bookCard = document.createElement("div");
+            bookCard.className = "col-sm-4";
+            const bookImage = book.volumeInfo.imageLinks
+              ? book.volumeInfo.imageLinks.thumbnail
+              : "https://via.placeholder.com/80x120";
 
-          let description =
-            book.volumeInfo.description || "No description available";
+            let description =
+              book.volumeInfo.description || "No description available";
 
-          bookCard.innerHTML = `
+            bookCard.innerHTML = `
              <div class="card">
             <div class="row g-0">
               <div class="col-12 col-md-4">
                 <div class="card-image-container">
                   <img
-                    src="${bookImage}" alt="${
-            book.volumeInfo.title
-          }" class="img-fluid rounded-start"
+                    src="${bookImage}" alt="${book.volumeInfo.title
+              }" class="img-fluid rounded-start"
                   />
                 </div>
               </div>
@@ -62,55 +63,45 @@ const handleSubmit = (event) => {
                   class="card-body d-flex flex-column justify-content-between gap-3"
                 >
                   <div>
-                    <h5 class="card-title text-truncate">${
-                      book.volumeInfo.title
-                    }</h5>
+                    <h5 class="card-title text-truncate">${book.volumeInfo.title
+              }</h5>
                     <small class="card-text fst-italic truncate">
-                    ${
-                      book.volumeInfo.authors
-                        ? book.volumeInfo.authors.join(", ")
-                        : "Unknown Author"
-                    }
+                    ${book.volumeInfo.authors
+                ? book.volumeInfo.authors.join(", ")
+                : "Unknown Author"
+              }
                       </small>
                   </div>
 
                 
                   <div class="row">
                     <div class="col-6">
-                      <a href="#" class="btn btn-primary btn-sm w-100 text-nowrap" book-title="${
-                        book.volumeInfo.title
-                      }" book-author="${
-            book.volumeInfo.authors
-          }" book-page-count="${
-            book.volumeInfo.pageCount
-          }" book-description="${description}" book-thumbnail="${bookImage}" id="btnView${index}" onclick="viewBook(true, event, ${index})">View</a>
+                      <a href="#" class="btn btn-primary btn-sm w-100 text-nowrap" book-title="${book.volumeInfo.title
+              }" book-author="${book.volumeInfo.authors
+              }" book-page-count="${book.volumeInfo.pageCount
+              }" book-description="${description}" book-thumbnail="${bookImage}" id="btnView${index}" onclick="viewBook(true, event, ${index})">View</a>
                     </div>
                     <div class="col-6">
-                      <button class="btn ${
-                        booksFromLocalStorage
-                          .map((b) => b.title)
-                          .includes(book.volumeInfo.title)
-                          ? "btn-danger"
-                          : "btn-primary"
-                      } btn-sm w-100 add-btn text-nowrap" id="btnDelete${index}" onclick="addOrRemoveBook(true, event, ${index})"  book-title="${
-            book.volumeInfo.title
-          }" 
-                                book-author="${
-                                  book.volumeInfo.authors
-                                    ? book.volumeInfo.authors.join(", ")
-                                    : "Unknown Author"
-                                }"
+                      <button class="btn ${booksFromLocalStorage
+                .map((b) => b.title)
+                .includes(book.volumeInfo.title)
+                ? "btn-danger"
+                : "btn-primary"
+              } btn-sm w-100 add-btn text-nowrap" id="btnDelete${index}" onclick="addOrRemoveBook(true, event, ${index})"  book-title="${book.volumeInfo.title
+              }" 
+                                book-author="${book.volumeInfo.authors
+                ? book.volumeInfo.authors.join(", ")
+                : "Unknown Author"
+              }"
                                 book-description="${description}" 
-                                book-page-count="${
-                                  book.volumeInfo.pageCount || "N/A"
-                                }"
-                                book-thumbnail="${bookImage}">${
-            booksFromLocalStorage
-              .map((b) => b.title)
-              .includes(book.volumeInfo.title)
-              ? "Remove"
-              : "Add"
-          }</button>
+                                book-page-count="${book.volumeInfo.pageCount || "N/A"
+              }"
+                                book-thumbnail="${bookImage}">${booksFromLocalStorage
+                .map((b) => b.title)
+                .includes(book.volumeInfo.title)
+                ? "Remove"
+                : "Add"
+              }</button>
                     </div>
                   </div>
                 </div>
@@ -118,62 +109,62 @@ const handleSubmit = (event) => {
             </div>
           </div>
             `;
-          resultsDiv.appendChild(bookCard);
-        });
-
-        // Add click event listeners for "Read More" buttons
-        document.querySelectorAll(".read-more-btn").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const shortDesc = btn.previousElementSibling.previousElementSibling;
-            const fullDesc = btn.previousElementSibling;
-            const isExpanded = fullDesc.style.display === "inline";
-
-            if (isExpanded) {
-              fullDesc.style.display = "none";
-              shortDesc.style.display = "inline";
-              btn.textContent = "Read More";
-            } else {
-              fullDesc.style.display = "inline";
-              shortDesc.style.display = "none";
-              btn.textContent = "Read Less";
-            }
+            resultsDiv.appendChild(bookCard);
           });
-        });
 
- 
-      } else {
-        resultsDiv.innerHTML = "<p>Results found: 0</p>";
-      }
-    });}
-    else {
-  fetch(`/.netlify/functions/fetch-books?query=${encodeURIComponent(query)}`)
-  .then((response) => response.json())
-  .then((data) => {
-    resultsDiv.innerHTML = "";
-    document
-      .querySelector(".loader-container")
-      .classList.replace("d-flex", "d-none");
-    // Clear previous results
-    if (data.items && data.items.length > 0) {
-      data.items.forEach((book, index) => {
-        const bookCard = document.createElement("div");
-        bookCard.className = "col-sm-4";
-        const bookImage = book.volumeInfo.imageLinks
-          ? book.volumeInfo.imageLinks.thumbnail
-          : "https://via.placeholder.com/80x120";
+          // Add click event listeners for "Read More" buttons
+          document.querySelectorAll(".read-more-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const shortDesc = btn.previousElementSibling.previousElementSibling;
+              const fullDesc = btn.previousElementSibling;
+              const isExpanded = fullDesc.style.display === "inline";
 
-        let description =
-          book.volumeInfo.description || "No description available";
+              if (isExpanded) {
+                fullDesc.style.display = "none";
+                shortDesc.style.display = "inline";
+                btn.textContent = "Read More";
+              } else {
+                fullDesc.style.display = "inline";
+                shortDesc.style.display = "none";
+                btn.textContent = "Read Less";
+              }
+            });
+          });
 
-        bookCard.innerHTML = `
+
+        } else {
+          resultsDiv.innerHTML = "<p>Results found: 0</p>";
+        }
+      });
+  }
+  else {
+    fetch(`/.netlify/functions/fetch-books?query=${encodeURIComponent(query)}`)
+      .then((response) => response.json())
+      .then((data) => {
+        resultsDiv.innerHTML = "";
+        document
+          .querySelector(".loader-container")
+          .classList.replace("d-flex", "d-none");
+        // Clear previous results
+        if (data.items && data.items.length > 0) {
+          data.items.forEach((book, index) => {
+            const bookCard = document.createElement("div");
+            bookCard.className = "col-sm-4";
+            const bookImage = book.volumeInfo.imageLinks
+              ? book.volumeInfo.imageLinks.thumbnail
+              : "https://via.placeholder.com/80x120";
+
+            let description =
+              book.volumeInfo.description || "No description available";
+
+            bookCard.innerHTML = `
            <div class="card">
           <div class="row g-0">
             <div class="col-12 col-md-4">
               <div class="card-image-container">
                 <img
-                  src="${bookImage}" alt="${
-          book.volumeInfo.title
-        }" class="img-fluid rounded-start"
+                  src="${bookImage}" alt="${book.volumeInfo.title
+              }" class="img-fluid rounded-start"
                 />
               </div>
             </div>
@@ -182,15 +173,13 @@ const handleSubmit = (event) => {
                 class="card-body d-flex flex-column justify-content-between gap-3"
               >
                 <div>
-                  <h5 class="card-title text-truncate">${
-                    book.volumeInfo.title
-                  }</h5>
+                  <h5 class="card-title text-truncate">${book.volumeInfo.title
+              }</h5>
                   <small class="card-text fst-italic truncate">
-                  ${
-                    book.volumeInfo.authors
-                      ? book.volumeInfo.authors.join(", ")
-                      : "Unknown Author"
-                  }
+                  ${book.volumeInfo.authors
+                ? book.volumeInfo.authors.join(", ")
+                : "Unknown Author"
+              }
                     </small>
                 </div>
 
@@ -199,40 +188,32 @@ const handleSubmit = (event) => {
                 </small>
                 <div class="row">
                   <div class="col-6">
-                    <a href="#" class="btn btn-primary btn-sm w-100 text-nowrap" book-title="${
-                      book.volumeInfo.title
-                    }" book-author="${
-          book.volumeInfo.authors
-        }" book-page-count="${
-          book.volumeInfo.pageCount
-        }" book-description="${description}" book-thumbnail="${bookImage}" id="btnView${index}" onclick="viewBook(true, event, ${index})">View</a>
+                    <a href="#" class="btn btn-primary btn-sm w-100 text-nowrap" book-title="${book.volumeInfo.title
+              }" book-author="${book.volumeInfo.authors
+              }" book-page-count="${book.volumeInfo.pageCount
+              }" book-description="${description}" book-thumbnail="${bookImage}" id="btnView${index}" onclick="viewBook(true, event, ${index})">View</a>
                   </div>
                   <div class="col-6">
-                    <button class="btn ${
-                      booksFromLocalStorage
-                        .map((b) => b.title)
-                        .includes(book.volumeInfo.title)
-                        ? "btn-danger"
-                        : "btn-primary"
-                    } btn-sm w-100 add-btn text-nowrap" id="btnDelete${index}" onclick="addOrRemoveBook(true, event, ${index})"  book-title="${
-          book.volumeInfo.title
-        }" 
-                              book-author="${
-                                book.volumeInfo.authors
-                                  ? book.volumeInfo.authors.join(", ")
-                                  : "Unknown Author"
-                              }"
+                    <button class="btn ${booksFromLocalStorage
+                .map((b) => b.title)
+                .includes(book.volumeInfo.title)
+                ? "btn-danger"
+                : "btn-primary"
+              } btn-sm w-100 add-btn text-nowrap" id="btnDelete${index}" onclick="addOrRemoveBook(true, event, ${index})"  book-title="${book.volumeInfo.title
+              }" 
+                              book-author="${book.volumeInfo.authors
+                ? book.volumeInfo.authors.join(", ")
+                : "Unknown Author"
+              }"
                               book-description="${description}" 
-                              book-page-count="${
-                                book.volumeInfo.pageCount || "N/A"
-                              }"
-                              book-thumbnail="${bookImage}">${
-          booksFromLocalStorage
-            .map((b) => b.title)
-            .includes(book.volumeInfo.title)
-            ? "Remove"
-            : "Add"
-        }</button>
+                              book-page-count="${book.volumeInfo.pageCount || "N/A"
+              }"
+                              book-thumbnail="${bookImage}">${booksFromLocalStorage
+                .map((b) => b.title)
+                .includes(book.volumeInfo.title)
+                ? "Remove"
+                : "Add"
+              }</button>
                   </div>
                 </div>
               </div>
@@ -240,54 +221,54 @@ const handleSubmit = (event) => {
           </div>
         </div>
           `;
-        resultsDiv.appendChild(bookCard);
+            resultsDiv.appendChild(bookCard);
+          });
+
+          // Add click event listeners for "Read More" buttons
+          document.querySelectorAll(".read-more-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const shortDesc = btn.previousElementSibling.previousElementSibling;
+              const fullDesc = btn.previousElementSibling;
+              const isExpanded = fullDesc.style.display === "inline";
+
+              if (isExpanded) {
+                fullDesc.style.display = "none";
+                shortDesc.style.display = "inline";
+                btn.textContent = "Read More";
+              } else {
+                fullDesc.style.display = "inline";
+                shortDesc.style.display = "none";
+                btn.textContent = "Read Less";
+              }
+            });
+          });
+
+          // Add click event listeners to "Add Book" buttons
+          // document.querySelectorAll(".add-btn").forEach((btn) => {
+          //   btn.addEventListener("click", () => {
+          //     const bookData = {
+          //       title: btn.getAttribute("data-title"),
+          //       author: btn.getAttribute("data-author"),
+          //       img: btn.getAttribute("data-img"),
+          //       description: btn.getAttribute("data-description"),
+          //       pageCount: btn.getAttribute("data-page"),
+          //     };
+
+          //     // Save the book to localStorage for transfer to MainView.html
+          //     const storedBooks = JSON.parse(localStorage.getItem("books")) || [];
+          //     storedBooks.push(bookData);
+          //     localStorage.setItem("books", JSON.stringify(storedBooks));
+
+          //     alert(`Book "${bookData.title}" added to MainView!`);
+          //     btn.innerHTML="Remove"
+          //     btn.classList.replace("btn-primary", "btn-danger")
+          //   });
+          // });
+        } else {
+          resultsDiv.innerHTML = "<p>Results found: 0</p>";
+        }
       });
-
-      // Add click event listeners for "Read More" buttons
-      document.querySelectorAll(".read-more-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const shortDesc = btn.previousElementSibling.previousElementSibling;
-          const fullDesc = btn.previousElementSibling;
-          const isExpanded = fullDesc.style.display === "inline";
-
-          if (isExpanded) {
-            fullDesc.style.display = "none";
-            shortDesc.style.display = "inline";
-            btn.textContent = "Read More";
-          } else {
-            fullDesc.style.display = "inline";
-            shortDesc.style.display = "none";
-            btn.textContent = "Read Less";
-          }
-        });
-      });
-
-      // Add click event listeners to "Add Book" buttons
-      // document.querySelectorAll(".add-btn").forEach((btn) => {
-      //   btn.addEventListener("click", () => {
-      //     const bookData = {
-      //       title: btn.getAttribute("data-title"),
-      //       author: btn.getAttribute("data-author"),
-      //       img: btn.getAttribute("data-img"),
-      //       description: btn.getAttribute("data-description"),
-      //       pageCount: btn.getAttribute("data-page"),
-      //     };
-
-      //     // Save the book to localStorage for transfer to MainView.html
-      //     const storedBooks = JSON.parse(localStorage.getItem("books")) || [];
-      //     storedBooks.push(bookData);
-      //     localStorage.setItem("books", JSON.stringify(storedBooks));
-
-      //     alert(`Book "${bookData.title}" added to MainView!`);
-      //     btn.innerHTML="Remove"
-      //     btn.classList.replace("btn-primary", "btn-danger")
-      //   });
-      // });
-    } else {
-      resultsDiv.innerHTML = "<p>Results found: 0</p>";
-    }
-  });
-};
+  };
 }
 searchButton.addEventListener("click", (event) => {
   handleSubmit(event);
@@ -297,63 +278,63 @@ formSubmit.addEventListener("submit", (event) => {
 });
 
 
-if (API_KEY != "production run"){
+if (API_KEY == "production run") {
   const script = document.createElement("script");
-    script.src = "/.netlify/functions/firebase-auth.js";
-    script.defer = true;
-    document.head.appendChild(script);
+  script.src = "/.netlify/functions/firebase-auth.js";
+  script.defer = true;
+  document.head.appendChild(script);
 
-}else{
+} else {
 
-      const firebaseConfig = {
-        apiKey: firebaseConfigValue.apiKey,
-        authDomain: firebaseConfigValue.authDomain,
-        projectId: firebaseConfigValue.projectId,
-        storageBucket: firebaseConfigValue.storageBucket,
-        messagingSenderId: firebaseConfigValue.messagingSenderId,
-        appId: firebaseConfigValue.appId,
-        measurementId: firebaseConfigValue.measurementId
-      };
+  const firebaseConfig = {
+    apiKey: firebaseConfigValue.apiKey,
+    authDomain: firebaseConfigValue.authDomain,
+    projectId: firebaseConfigValue.projectId,
+    storageBucket: firebaseConfigValue.storageBucket,
+    messagingSenderId: firebaseConfigValue.messagingSenderId,
+    appId: firebaseConfigValue.appId,
+    measurementId: firebaseConfigValue.measurementId
+  };
 
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    setPersistence(auth, browserSessionPersistence)
+  setPersistence(auth, browserSessionPersistence)
     .then(() => {
-        console.log("Persistence set to session-only.");
+      console.log("Persistence set to session-only.");
     })
     .catch(error => {
-        console.error("Error setting persistence:", error.message);
+      console.error("Error setting persistence:", error.message);
     });
 
-// Automatically sign out the user when the page loads or reloads
-window.googleSignIn = function () {
-  const provider = new GoogleAuthProvider();
-  
-  // Force the user to select an account every time
-  provider.setCustomParameters({
-      prompt: 'select_account'
-  });
+  // Automatically sign out the user when the page loads or reloads
+  window.googleSignIn = function () {
+    const provider = new GoogleAuthProvider();
 
-  signInWithPopup(auth, provider)
+    // Force the user to select an account every time
+    provider.setCustomParameters({
+      prompt: 'select_account'
+    });
+
+    signInWithPopup(auth, provider)
       .then(result => {
-          console.log("User signed in with Google:", result.user);
+        console.log("User signed in with Google:", result.user);
       })
       .catch(error => {
-          console.error("Error:", error.message);
+        console.error("Error:", error.message);
       });
-};
+  };
 
-window.googleSignIn = function () {
+  window.googleSignIn = function () {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
-        .then(result => {
-            console.log("User signed in with Google:", result.user);
-        })
-        .catch(error => {
-            console.error("Error:", error.message);
-        });
-};
+      .then(result => {
+        console.log("User signed in with Google:", result.user);
+      })
+      .catch(error => {
+        console.error("Error:", error.message);
+      });
+  };
 }
