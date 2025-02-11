@@ -280,7 +280,7 @@ formSubmit.addEventListener("submit", (event) => {
 
 
 if (API_KEY == "production run") {
-  const firebaseConfigValue = {
+  const firebaseConfig = {
     apiKey: "AIzaSyC07NCezdAfjhvO13lgRcpYn8rHo5zdaVY",
     authDomain: "book-nook-c21a0.firebaseapp.com",
     projectId: "book-nook-c21a0",
