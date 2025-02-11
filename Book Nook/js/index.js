@@ -281,6 +281,7 @@ formSubmit.addEventListener("submit", (event) => {
 if (API_KEY == "production run") {
   const script = document.createElement("script");
   script.src = "/.netlify/functions/firebase-auth.js";
+  script.type = "module";
   script.defer = true;
   document.head.appendChild(script);
 
