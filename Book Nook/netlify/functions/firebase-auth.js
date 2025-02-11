@@ -27,26 +27,16 @@ const firebaseConfig = {
         console.error("Error setting persistence:", error.message);
     });
 
-// Automatically sign out the user when the page loads or reloads
-window.googleSignIn = function () {
-  const provider = new GoogleAuthProvider();
-  
-  // Force the user to select an account every time
-  provider.setCustomParameters({
-      prompt: 'select_account'
-  });
 
-  signInWithPopup(auth, provider)
-      .then(result => {
-          console.log("User signed in with Google:", result.user);
-      })
-      .catch(error => {
-          console.error("Error:", error.message);
-      });
-};
 
 window.googleSignIn = function () {
+
+    if (!auth) {
+        console.error("Firebase Auth not initialized");
+        return;
+    }
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
     signInWithPopup(auth, provider)
         .then(result => {
             console.log("User signed in with Google:", result.user);
