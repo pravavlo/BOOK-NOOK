@@ -13,6 +13,68 @@ document.addEventListener("DOMContentLoaded", () => {
   searchInput.value = sessionStorage.getItem("searchQuery") || "";
   handleSubmit(event);
 });
+
+if (API_KEY == "production run") {
+  import("/.netlify/functions/firebase-auth.js")
+        .then(() => console.log("Production mode: Firebase auth loaded from Netlify."))
+        .catch(error => console.error("Failed to load Firebase auth from Netlify:", error));
+
+} else {
+
+  const firebaseConfig = {
+    apiKey: firebaseConfigValue.apiKey,
+    authDomain: firebaseConfigValue.authDomain,
+    projectId: firebaseConfigValue.projectId,
+    storageBucket: firebaseConfigValue.storageBucket,
+    messagingSenderId: firebaseConfigValue.messagingSenderId,
+    appId: firebaseConfigValue.appId,
+    measurementId: firebaseConfigValue.measurementId
+  };
+
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  setPersistence(auth, browserSessionPersistence)
+    .then(() => {
+      console.log("Persistence set to session-only.");
+    })
+    .catch(error => {
+      console.error("Error setting persistence:", error.message);
+    });
+
+  // Automatically sign out the user when the page loads or reloads
+  window.googleSignIn = function () {
+    const provider = new GoogleAuthProvider();
+
+    // Force the user to select an account every time
+    provider.setCustomParameters({
+      prompt: 'select_account'
+    });
+
+    signInWithPopup(auth, provider)
+      .then(result => {
+        console.log("User signed in with Google:", result.user);
+      })
+      .catch(error => {
+        console.error("Error:", error.message);
+      });
+  };
+
+  window.googleSignIn = function () {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then(result => {
+        console.log("User signed in with Google:", result.user);
+      })
+      .catch(error => {
+        console.error("Error:", error.message);
+      });
+  };
+}
+
+
 const handleSubmit = (event) => {
   event.preventDefault();
   const query = searchInput.value;
@@ -278,64 +340,3 @@ formSubmit.addEventListener("submit", (event) => {
 });
 
 
-if (API_KEY == "production run") {
-  const script = document.createElement("script");
-  script.src = "/.netlify/functions/firebase-auth.js";
-  script.type = "module";
-  script.defer = true;
-  document.head.appendChild(script);
-
-} else {
-
-  const firebaseConfig = {
-    apiKey: firebaseConfigValue.apiKey,
-    authDomain: firebaseConfigValue.authDomain,
-    projectId: firebaseConfigValue.projectId,
-    storageBucket: firebaseConfigValue.storageBucket,
-    messagingSenderId: firebaseConfigValue.messagingSenderId,
-    appId: firebaseConfigValue.appId,
-    measurementId: firebaseConfigValue.measurementId
-  };
-
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  setPersistence(auth, browserSessionPersistence)
-    .then(() => {
-      console.log("Persistence set to session-only.");
-    })
-    .catch(error => {
-      console.error("Error setting persistence:", error.message);
-    });
-
-  // Automatically sign out the user when the page loads or reloads
-  window.googleSignIn = function () {
-    const provider = new GoogleAuthProvider();
-
-    // Force the user to select an account every time
-    provider.setCustomParameters({
-      prompt: 'select_account'
-    });
-
-    signInWithPopup(auth, provider)
-      .then(result => {
-        console.log("User signed in with Google:", result.user);
-      })
-      .catch(error => {
-        console.error("Error:", error.message);
-      });
-  };
-
-  window.googleSignIn = function () {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(result => {
-        console.log("User signed in with Google:", result.user);
-      })
-      .catch(error => {
-        console.error("Error:", error.message);
-      });
-  };
-}

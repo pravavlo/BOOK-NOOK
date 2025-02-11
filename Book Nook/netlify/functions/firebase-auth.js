@@ -1,8 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, setPersistence,
-  browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
 
-// Load Firebase config from environment variables
+// Firebase Config
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -12,37 +11,21 @@ const firebaseConfig = {
     appId: process.env.FIREBASE_APP_ID
 };
 
-
-
 // Initialize Firebase
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    setPersistence(auth, browserSessionPersistence)
-    .then(() => {
-        console.log("Persistence set to session-only.");
-    })
-    .catch(error => {
-        console.error("Error setting persistence:", error.message);
-    });
+// Set session persistence
+setPersistence(auth, browserSessionPersistence)
+    .then(() => console.log("Persistence set to session-only."))
+    .catch(error => console.error("Error setting persistence:", error.message));
 
-
-
-window.googleSignIn = function () {
-
-    if (!auth) {
-        console.error("Firebase Auth not initialized");
-        return;
-    }
+// Google Sign-In Function
+export function googleSignIn() {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    signInWithPopup(auth, provider)
-        .then(result => {
-            console.log("User signed in with Google:", result.user);
-        })
-        .catch(error => {
-            console.error("Error:", error.message);
-        });
-};
 
+    signInWithPopup(auth, provider)
+        .then(result => console.log("User signed in with Google:", result.user))
+        .catch(error => console.error("Error:", error.message));
+}
