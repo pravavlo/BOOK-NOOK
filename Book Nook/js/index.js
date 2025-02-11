@@ -30,49 +30,48 @@ if (API_KEY == "production run") {
     appId: firebaseConfigValue.appId,
     measurementId: firebaseConfigValue.measurementId
   };
-
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  setPersistence(auth, browserSessionPersistence)
-    .then(() => {
-      console.log("Persistence set to session-only.");
-    })
-    .catch(error => {
-      console.error("Error setting persistence:", error.message);
-    });
-
-  // Automatically sign out the user when the page loads or reloads
-  window.googleSignIn = function () {
-    const provider = new GoogleAuthProvider();
-
-    // Force the user to select an account every time
-    provider.setCustomParameters({
-      prompt: 'select_account'
-    });
-
-    signInWithPopup(auth, provider)
-      .then(result => {
-        console.log("User signed in with Google:", result.user);
-      })
-      .catch(error => {
-        console.error("Error:", error.message);
-      });
-  };
-
-  window.googleSignIn = function () {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(result => {
-        console.log("User signed in with Google:", result.user);
-      })
-      .catch(error => {
-        console.error("Error:", error.message);
-      });
-  };
 }
+
+ // Initialize Firebase
+ const app = initializeApp(firebaseConfig);
+ const auth = getAuth(app);
+
+ setPersistence(auth, browserSessionPersistence)
+   .then(() => {
+     console.log("Persistence set to session-only.");
+   })
+   .catch(error => {
+     console.error("Error setting persistence:", error.message);
+   });
+
+ // Automatically sign out the user when the page loads or reloads
+ window.googleSignIn = function () {
+   const provider = new GoogleAuthProvider();
+
+   // Force the user to select an account every time
+   provider.setCustomParameters({
+     prompt: 'select_account'
+   });
+
+   signInWithPopup(auth, provider)
+     .then(result => {
+       console.log("User signed in with Google:", result.user);
+     })
+     .catch(error => {
+       console.error("Error:", error.message);
+     });
+ };
+
+ window.googleSignIn = function () {
+   const provider = new GoogleAuthProvider();
+   signInWithPopup(auth, provider)
+     .then(result => {
+       console.log("User signed in with Google:", result.user);
+     })
+     .catch(error => {
+       console.error("Error:", error.message);
+     });
+ };
 
 
 const handleSubmit = (event) => {
