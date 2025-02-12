@@ -280,44 +280,17 @@ formSubmit.addEventListener("submit", (event) => {
 
 
 if (API_KEY == "production run") {
-  const firebaseConfig = {
-    apiKey: "AIzaSyC07NCezdAfjhvO13lgRcpYn8rHo5zdaVY",
-    authDomain: "book-nook-c21a0.firebaseapp.com",
-    projectId: "book-nook-c21a0",
-    storageBucket: "book-nook-c21a0.firebasestorage.app",
-    messagingSenderId: "1000473432341",
-    appId: "1:1000473432341:web:5890f3cd87ed946224d91c",
-    measurementId: "G-VX4GBDL4V5"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  fetch("/.netlify/functions/firebase-auth")
+  .then(response => response.json())
+  .then(firebaseConfig => {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    
+    // Now you can use auth, GoogleAuthProvider, etc.
+    console.log("Firebase initialized successfully.");
+  })
+  .catch(error => console.error("Failed to load Firebase config:", error));
  
-  setPersistence(auth, browserSessionPersistence)
-    .then(() => {
-      console.log("Persistence set to session-only.");
-    })
-    .catch(error => {
-      console.error("Error setting persistence:", error.message);
-    });
- 
-  // Automatically sign out the user when the page loads or reloads
-  window.googleSignIn = function () {
-    const provider = new GoogleAuthProvider();
- 
-    // Force the user to select an account every time
-    provider.setCustomParameters({
-      prompt: 'select_account'
-    });
- 
-    signInWithPopup(auth, provider)
-      .then(result => {
-        console.log("User signed in with Google:", result.user);
-      })
-      .catch(error => {
-        console.error("Error:", error.message);
-      });
-  };
 } else {
 
   const firebaseConfig = {
