@@ -3,11 +3,14 @@ import {
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, setPersistence,
   browserSessionPersistence
 } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+
 const searchBtn = document.getElementById("formSubmit");
 const searchInput = document.getElementById("searchInput");
 const resultsDiv = document.getElementById("searchResult");
 const searchButton = document.getElementById("search-btn");
 const API_KEY = typeof GOOGLE_API_KEY !== "undefined" ? GOOGLE_API_KEY : "production run";
+const supabaseUrl = 'https://ahzeazhkoblmyuucfofp.supabase.co'
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoemVhemhrb2JsbXl1dWNmb2ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1MDQwMTUsImV4cCI6MjA1NTA4MDAxNX0.ul5X7gDki_XNZJqr9u9UI17qdtps3r5aynECI2qoWp8"
 const booksFromLocalStorage = JSON.parse(localStorage.getItem("books")) || [];
 document.addEventListener("DOMContentLoaded", () => {
   searchInput.value = sessionStorage.getItem("searchQuery") || "";
@@ -280,11 +283,24 @@ formSubmit.addEventListener("submit", (event) => {
 
 
 if (API_KEY != "production run") {
-  import("./firebase-auth.js")
-  .then(module => {
-    module.initializeFirebase();
-  })
-  .catch(error => console.error("❌ Failed to load Firebase module:", error));
+  const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+  document.getElementById("google-login").addEventListener("click", async () => {
+    console.log("🔹 Google Login Clicked");
+
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: "google",
+        
+    });
+
+    if (error) {
+        console.error("❌ Login Error:", error.message);
+    } else {
+        console.log("✅ Popup opened successfully", data);
+    }
+});
+
+
 
 } else {
 
