@@ -1,21 +1,87 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
-  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, setPersistence,
-  browserSessionPersistence
-} from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider,  signOut as firebaseSignOut, setPersistence,
+  browserSessionPersistence , onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 const searchBtn = document.getElementById("formSubmit");
 const searchInput = document.getElementById("searchInput");
 const resultsDiv = document.getElementById("searchResult");
 const searchButton = document.getElementById("search-btn");
+const signInButton = document.getElementById("google-sign-in-btn");
+const logoutButton = document.getElementById("sign-out-btn");
+const userInfoContainer = document.getElementById("user-info-container");
+const userPhoto = document.getElementById("user-photo");
+const userName = document.getElementById("user-name");
 const API_KEY = typeof GOOGLE_API_KEY !== "undefined" ? GOOGLE_API_KEY : "production run";
-const supabaseUrl = 'https://ahzeazhkoblmyuucfofp.supabase.co'
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoemVhemhrb2JsbXl1dWNmb2ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1MDQwMTUsImV4cCI6MjA1NTA4MDAxNX0.ul5X7gDki_XNZJqr9u9UI17qdtps3r5aynECI2qoWp8"
 const booksFromLocalStorage = JSON.parse(localStorage.getItem("books")) || [];
 document.addEventListener("DOMContentLoaded", () => {
   searchInput.value = sessionStorage.getItem("searchQuery") || "";
   handleSubmit(event);
 });
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC07NCezdAfjhvO13lgRcpYn8rHo5zdaVY",
+
+  authDomain: "book-nook-c21a0.firebaseapp.com",
+
+  projectId: "book-nook-c21a0",
+
+  storageBucket: "book-nook-c21a0.firebasestorage.app",
+
+  messagingSenderId: "1000473432341",
+
+  appId: "1:1000473432341:web:5890f3cd87ed946224d91c",
+
+  measurementId: "G-VX4GBDL4V5"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Ensure users must always choose an account
+auth.languageCode = 'en';
+const googleSignIn = () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      console.log("Signed in:", result.user);
+      updateUI(result.user);
+    })
+    .catch((error) => console.error("Sign-in error:", error));
+};
+
+// Sign-Out
+const signOut = () => {
+  firebaseSignOut(auth)
+    .then(() => {
+      console.log("User signed out.");
+      updateUI(null);
+    })
+    .catch((error) => console.error("Sign-out error:", error));
+};
+
+// Update UI based on auth state
+const updateUI = (user) => {
+  if (user) {
+    userName.textContent = user.displayName;
+    userPhoto.src = user.photoURL;
+    userInfoContainer.style.display = "block";
+    signInButton.style.display = "none";
+  } else {
+    userInfoContainer.style.display = "none";
+    signInButton.style.display = "inline-block";
+  }
+};
+
+// Listen for auth state changes (fixes refresh issue)
+onAuthStateChanged(auth, (user) => {
+  updateUI(user);
+});
+
+// Attach event listeners
+signInButton.addEventListener("click", googleSignIn);
+logoutButton.addEventListener("click", signOut);
 
 const handleSubmit = (event) => {
   event.preventDefault();
@@ -282,67 +348,6 @@ formSubmit.addEventListener("submit", (event) => {
 });
 
 
-if (API_KEY != "production run") {
-  const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-  document.getElementById("google-login").addEventListener("click", async () => {
-    console.log("🔹 Google Login Clicked");
-
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
-        provider: "google",
-        
-    });
-
-    if (error) {
-        console.error("❌ Login Error:", error.message);
-    } else {
-        console.log("✅ Popup opened successfully", data);
-    }
-});
 
 
 
-} else {
-
-  const firebaseConfig = {
-    apiKey: firebaseConfigValue.apiKey,
-    authDomain: firebaseConfigValue.authDomain,
-    projectId: firebaseConfigValue.projectId,
-    storageBucket: firebaseConfigValue.storageBucket,
-    messagingSenderId: firebaseConfigValue.messagingSenderId,
-    appId: firebaseConfigValue.appId,
-    measurementId: firebaseConfigValue.measurementId
-  };
-
-  // Initialize Firebase
- const app = initializeApp(firebaseConfig);
- const auth = getAuth(app);
-
- setPersistence(auth, browserSessionPersistence)
-   .then(() => {
-     console.log("Persistence set to session-only.");
-   })
-   .catch(error => {
-     console.error("Error setting persistence:", error.message);
-   });
-
- // Automatically sign out the user when the page loads or reloads
- window.googleSignIn = function () {
-   const provider = new GoogleAuthProvider();
-
-   // Force the user to select an account every time
-   provider.setCustomParameters({
-     prompt: 'select_account'
-   });
-
-   signInWithPopup(auth, provider)
-     .then(result => {
-       console.log("User signed in with Google:", result.user);
-     })
-     .catch(error => {
-       console.error("Error:", error.message);
-     });
- };
-}
-
- 
