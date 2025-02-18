@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider,  signOut as firebaseSignOut, setPersistence,
-  browserSessionPersistence , onAuthStateChanged 
+    onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 const searchBtn = document.getElementById("formSubmit");
@@ -39,7 +39,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
+const provider = new GoogleAuthProvider();
 // Ensure users must always choose an account
 auth.languageCode = 'en';
 const googleSignIn = () => {
