@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Entry Form</title>
+</head>
+<body>
+    <h2>Add a New Book</h2>
+    <form id="bookForm">
+        <label>Title (Required):</label>
+        <input type="text" id="title" required><br><br>
+
+        <label>Author:</label>
+        <input type="text" id="author"><br><br>
+
+        <label>Page Count:</label>
+        <input type="number" id="pageCount"><br><br>
+
+        <label>Upload Image:</label>
+        <input type="file" id="imageInput" accept="image/*"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/browser-image-compression"></script>
+    <script src="create-Book.js"></script>
+</body>
+</html>
