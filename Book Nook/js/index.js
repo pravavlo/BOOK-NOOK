@@ -13,75 +13,18 @@ const logoutButton = document.getElementById("sign-out-btn");
 const userInfoContainer = document.getElementById("user-info-container");
 const userPhoto = document.getElementById("user-photo");
 const userName = document.getElementById("user-name");
-const API_KEY = typeof GOOGLE_API_KEY !== "undefined" ? GOOGLE_API_KEY : "production run";
+const isLocalHost = (window.location.hostname === "localhost" || 
+  window.location.hostname === "127.0.0.1" || 
+  window.location.hostname === "::1") 
+ ? "development" 
+ : "production";
 const booksFromLocalStorage = JSON.parse(localStorage.getItem("books")) || [];
 document.addEventListener("DOMContentLoaded", () => {
   searchInput.value = sessionStorage.getItem("searchQuery") || "";
   handleSubmit(event);
 });
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC07NCezdAfjhvO13lgRcpYn8rHo5zdaVY",
 
-  authDomain: "book-nook-c21a0.firebaseapp.com",
-
-  projectId: "book-nook-c21a0",
-
-  storageBucket: "book-nook-c21a0.firebasestorage.app",
-
-  messagingSenderId: "1000473432341",
-
-  appId: "1:1000473432341:web:5890f3cd87ed946224d91c",
-
-  measurementId: "G-VX4GBDL4V5"
-
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-// Ensure users must always choose an account
-auth.languageCode = 'en';
-const googleSignIn = () => {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      console.log("Signed in:", result.user);
-      updateUI(result.user);
-    })
-    .catch((error) => console.error("Sign-in error:", error));
-};
-
-// Sign-Out
-const signOut = () => {
-  firebaseSignOut(auth)
-    .then(() => {
-      console.log("User signed out.");
-      updateUI(null);
-    })
-    .catch((error) => console.error("Sign-out error:", error));
-};
-
-// Update UI based on auth state
-const updateUI = (user) => {
-  if (user) {
-    userName.textContent = user.displayName;
-    userPhoto.src = user.photoURL;
-    userInfoContainer.style.display = "block";
-    signInButton.style.display = "none";
-  } else {
-    userInfoContainer.style.display = "none";
-    signInButton.style.display = "inline-block";
-  }
-};
-
-// Listen for auth state changes (fixes refresh issue)
-onAuthStateChanged(auth, (user) => {
-  updateUI(user);
-});
-
-// Attach event listeners
-signInButton.addEventListener("click", googleSignIn);
-logoutButton.addEventListener("click", signOut);
 
 const handleSubmit = (event) => {
   event.preventDefault();
@@ -95,10 +38,10 @@ const handleSubmit = (event) => {
   document
     .querySelector(".loader-container")
     .classList.replace("d-none", "d-flex");
-  if (API_KEY != "production run") {
+  if (isLocalHost == "development") {
     // uncomment the commented fetch google api wehn u dont have hte key else proceed accordingly
-    //fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`)
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${API_KEY}`)
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`)
+    //fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&key=${API_KEY}`)
       .then((response) => response.json())
       .then((data) => {
         resultsDiv.innerHTML = "";
@@ -348,6 +291,67 @@ formSubmit.addEventListener("submit", (event) => {
 });
 
 
+const firebaseConfig = {
+  apiKey: "AIzaSyC07NCezdAfjhvO13lgRcpYn8rHo5zdaVY",
 
+  authDomain: "book-nook-c21a0.firebaseapp.com",
+
+  projectId: "book-nook-c21a0",
+
+  storageBucket: "book-nook-c21a0.firebasestorage.app",
+
+  messagingSenderId: "1000473432341",
+
+  appId: "1:1000473432341:web:5890f3cd87ed946224d91c",
+
+  measurementId: "G-VX4GBDL4V5"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+// Ensure users must always choose an account
+auth.languageCode = 'en';
+const googleSignIn = () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      console.log("Signed in:", result.user);
+      updateUI(result.user);
+    })
+    .catch((error) => console.error("Sign-in error:", error));
+};
+
+// Sign-Out
+const signOut = () => {
+  firebaseSignOut(auth)
+    .then(() => {
+      console.log("User signed out.");
+      updateUI(null);
+    })
+    .catch((error) => console.error("Sign-out error:", error));
+};
+
+// Update UI based on auth state
+const updateUI = (user) => {
+  if (user) {
+    userName.textContent = user.displayName;
+    userPhoto.src = user.photoURL;
+    userInfoContainer.style.display = "block";
+    signInButton.style.display = "none";
+  } else {
+    userInfoContainer.style.display = "none";
+    signInButton.style.display = "inline-block";
+  }
+};
+
+// Listen for auth state changes (fixes refresh issue)
+onAuthStateChanged(auth, (user) => {
+  updateUI(user);
+});
+
+// Attach event listeners
+signInButton.addEventListener("click", googleSignIn);
+logoutButton.addEventListener("click", signOut);
 
 
