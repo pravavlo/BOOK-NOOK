@@ -2,7 +2,7 @@ const bookListDiv = document.getElementById("book-list");
 
 // Load books from localStorage
 const storedBooks = JSON.parse(localStorage.getItem("books")) || [];
-
+const loggedInUser = JSON.parse(sessionStorage.getItem("user")) || [];
 if (storedBooks.length > 0) {
   storedBooks.forEach((book) => {
     const bookCard = document.createElement("div");
@@ -26,6 +26,7 @@ if (storedBooks.length > 0) {
                         <button class="btn btn-danger btn-sm px-4 mt-2" onclick="addOrRemoveBook(false, event, ${
                           book.id
                         })">Remove</button>
+                        ${loggedInUser.length != 0 ? `<button class="btn btn-success btn-sm px-4 mt-2" onclick="requestBook(event, ${book.id})">Request Book</button>` : ''}
                     </div>
                     </div>
                 `;

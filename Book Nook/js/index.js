@@ -339,9 +339,15 @@ const updateUI = (user) => {
     userPhoto.src = user.photoURL;
     userInfoContainer.style.display = "block";
     signInButton.style.display = "none";
+    sessionStorage.setItem("user", JSON.stringify({
+      name: user.displayName,
+      email: user.email,
+      photo: user.photoURL
+    }));
   } else {
     userInfoContainer.style.display = "none";
     signInButton.style.display = "inline-block";
+    sessionStorage.removeItem("user");
   }
 };
 
