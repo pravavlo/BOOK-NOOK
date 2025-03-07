@@ -36,3 +36,30 @@ if (storedBooks.length > 0) {
 } else {
   bookListDiv.innerHTML = "<p>No books added yet.</p>";
 }
+
+
+function requestBook(event, bookId) {
+  event.preventDefault();
+  const book = storedBooks.find((b) => b.id === bookId);
+  if (!book) {
+    alert("Book not found.");
+    return;
+  }
+
+  // Create a book request object
+  const request = {
+    userName: loggedInUser.name,
+    userEmail: loggedInUser.email,
+    userPhoto: loggedInUser.photo,
+    selectedBookTitle: book.title,
+    selectedBookId: book.id,
+    requestTime: new Date().toLocaleString(),
+  };
+
+  // Store request in localStorage
+  let bookRequests = JSON.parse(localStorage.getItem("bookRequests")) || [];
+  bookRequests.push(request);
+  localStorage.setItem("bookRequests", JSON.stringify(bookRequests));
+
+  alert(`Book "${book.title}" has been requested successfully.`);
+}

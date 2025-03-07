@@ -310,10 +310,17 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+
 // Ensure users must always choose an account
 auth.languageCode = 'en';
 const googleSignIn = () => {
+  const provider = new GoogleAuthProvider();
+  
+  // Force account selection
+  provider.setCustomParameters({
+    prompt: "select_account"
+  });
+  
   signInWithPopup(auth, provider)
     .then((result) => {
       console.log("Signed in:", result.user);
