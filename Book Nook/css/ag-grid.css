@@ -1,0 +1,17 @@
+.ag-input-field-input{
+    height: 30px !important;
+    font-size: 1rem !important;
+    border: solid 1px #63514f !important;
+    color: #63514f !important;
+    border-radius: 0 !important;
+}
+.ag-header-viewport, .ag-pinned-right-header{
+    background-color: #63514f !important;
+    color: white;
+}
+.ag-header-cell-resize::after{
+background-color: white;
+}
+/* .ag-paging-panel{
+    background-color: #af9182 !important;
+} */

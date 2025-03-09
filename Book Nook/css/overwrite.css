@@ -1,3 +1,10 @@
+.text-primary{
+    color: #63514f !important;   
+}
+.bg-primary{
+    background-color: #63514f !important;
+    color: white;
+}
 .btn-primary{
     background-color: #63514f;
     border-color: #63514f;
@@ -52,4 +59,7 @@ input:focus {
     box-shadow: 0 0 8px #63514f !important;
     outline: none !important;
     color: #63514f !important;
+}
+.border-primary{
+ border-color: #63514f !important;;   
 }

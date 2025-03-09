@@ -1,5 +1,7 @@
+
 body {
   background-color: #d9d9d9;
+  height: 100vh;
 }
 .navbar {
   background-color: #d9d9d9;
@@ -11,7 +13,29 @@ body {
   text-transform: uppercase;
   color: #362828;
   font-weight: 700;
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
 }
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: #362828;
+  transition: width 0.4s ease-out, left 0.4s ease-out;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after { /* Active link gets the same effect */
+  width: 95%;  /* Slightly less than 100% to prevent continuous line effect */
+  left: 2.5%;
+}
+
+
 .slogan h2 {
   color: #63514f;
   letter-spacing: 2px;
