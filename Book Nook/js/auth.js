@@ -1,34 +1,30 @@
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { firebaseConfig } from "./config.js";
+document.addEventListener("DOMContentLoaded", () => {
+  const userInfoContainer = document.getElementById("user-info-container");
+  const userPhoto = document.getElementById("user-photo");
+  const userName = document.getElementById("user-name");
+  const signInButton = document.getElementById("google-sign-in-btn");
+  const logoutButton = document.getElementById("sign-out-btn");
 
-// Initialize Firebase Authentication
-const auth = getAuth();
+  // Retrieve user info from sessionStorage
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
-// Initialize FirebaseUI
-const ui = new firebaseui.auth.AuthUI(auth);
-
-ui.start("#firebaseui-auth-container", {
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID, // Enable Google Login
-  ],
-  signInSuccessUrl: "index.html", // Redirect to homepage after login
-  credentialHelper: firebaseui.auth.CredentialHelper.NONE,
-});
-
-// Handle user authentication state
-onAuthStateChanged(auth, (user) => {
   if (user) {
-    document.getElementById("user-info").innerText = `Logged in as: ${user.email}`;
-    document.getElementById("logout-btn").classList.remove("d-none");
+    // Show user info
+    userInfoContainer.style.display = "flex"; // Show the user info
+    userName.textContent = user.name;
+    userPhoto.src = user.photo;
+    signInButton.style.display = "none"; // Hide sign-in button
   } else {
-    document.getElementById("user-info").innerText = "";
-    document.getElementById("logout-btn").classList.add("d-none");
+    // Hide user info
+    userInfoContainer.style.display = "none";
+    signInButton.style.display = "inline-block";
   }
-});
 
-// Logout functionality
-document.getElementById("logout-btn").addEventListener("click", () => {
-  signOut(auth).then(() => {
-    console.log("User logged out");
-  });
+  // Logout functionality
+  if (logoutButton) {
+    logoutButton.addEventListener("click", () => {
+      sessionStorage.removeItem("user"); // Remove from sessionStorage
+      window.location.reload(); // Reload to update UI
+    });
+  }
 });

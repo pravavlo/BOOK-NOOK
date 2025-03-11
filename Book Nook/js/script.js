@@ -83,69 +83,8 @@ window.addEventListener("load", function () {
       selectedBookTitle: "Rich Dad Poor Dad",
       requestTime: "March 10 2025",
     },
-    {
-      userName: "Sophia Turner",
-      userEmail: "sophia@test.com",
-      userPhoto: "https://placehold.co/150",
-      selectedBookTitle: "Atomic Habits",
-      requestTime: "March 11 2025",
-    },
-    {
-      userName: "Liam Johnson",
-      userEmail: "liam@test.com",
-      userPhoto: "https://placehold.co/150",
-      selectedBookTitle: "The Power of Now",
-      requestTime: "March 12 2025",
-    },
-    {
-      userName: "Olivia Parker",
-      userEmail: "olivia@test.com",
-      userPhoto: "https://placehold.co/150",
-      selectedBookTitle: "Think and Grow Rich",
-      requestTime: "March 13 2025",
-    },
-    {
-      userName: "Noah Wilson",
-      userEmail: "noah@test.com",
-      userPhoto: "https://placehold.co/150",
-      selectedBookTitle: "The 5 AM Club",
-      requestTime: "March 14 2025",
-    },
-    {
-      userName: "Emma Davis",
-      userEmail: "emma@test.com",
-      userPhoto: "https://placehold.co/150",
-      selectedBookTitle: "How to Win Friends and Influence People",
-      requestTime: "March 15 2025",
-    },
-    {
-      userName: "James Miller",
-      userEmail: "james@test.com",
-      userPhoto: "https://placehold.co/150",
-      selectedBookTitle: "The Subtle Art of Not Giving a F*ck",
-      requestTime: "March 16 2025",
-    },
-    {
-      userName: "Ava Garcia",
-      userEmail: "ava@test.com",
-      userPhoto: "https://placehold.co/150",
-      selectedBookTitle: "You Are a Badass",
-      requestTime: "March 17 2025",
-    },
-    {
-      userName: "William Martinez",
-      userEmail: "william@test.com",
-      userPhoto: "https://placehold.co/150",
-      selectedBookTitle: "The Alchemist",
-      requestTime: "March 18 2025",
-    },
-    {
-      userName: "Mia Brown",
-      userEmail: "mia@test.com",
-      userPhoto: "https://placehold.co/150",
-      selectedBookTitle: "The Monk Who Sold His Ferrari",
-      requestTime: "March 19 2025",
-    },
+    
+   
   ];
 
   localStorage.setItem("bookRequests", JSON.stringify(requestedBooks));

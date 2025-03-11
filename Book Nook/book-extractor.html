@@ -54,9 +54,14 @@
               <a class="nav-link" href="book-request.html">Books request</a>
             </li>
             <li class="nav-item">
-              <button id="google-sign-in-btn" class="btn btn-danger">
-                Sign in with Google
-              </button>
+              <button id="google-sign-in-btn" class="btn btn-danger">Sign in with Google</button>
+            </li>
+            
+            <!-- User info section, initially hidden -->
+            <li class="nav-item" id="user-info-container" style="display: none;">
+              <img id="user-photo" width="30" height="30" alt="User Photo">
+              <span id="user-name"></span>
+              <button id="sign-out-btn" class="btn btn-warning">Sign Out</button>
             </li>
           </ul>
         </div>
@@ -122,5 +127,6 @@
       integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
       crossorigin="anonymous"
     ></script>
+    <script src="./js/auth.js"></script>
   </body>
 </html>
