@@ -22,10 +22,13 @@
     border-color: #63514f;
 }
 
+
+
+
 .btn-outline-danger{
-    font-weight: 700;
+    /* font-weight: 700; */
     padding-inline: 2rem;
-    border: solid 2px #9d0000;
+    /* border: solid 2px #9d0000; */
     border-radius: 15px;
     color: #9d0000;
     background-color: #ffffff;
@@ -62,4 +65,8 @@ input:focus {
 }
 .border-primary{
  border-color: #63514f !important;;   
+}
+.img-thumbnail{
+    height: 5rem !important;
+    width: 5rem !important;
 }

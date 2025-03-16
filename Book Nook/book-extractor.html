@@ -36,7 +36,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <div class="collapse navbar-collapse text-end" id="navbarTogglerDemo02">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <a class="nav-link" href="index.html">Book Search</a>
@@ -54,14 +54,18 @@
               <a class="nav-link" href="book-request.html">Books request</a>
             </li>
             <li class="nav-item">
-              <button id="google-sign-in-btn" class="btn btn-danger">Sign in with Google</button>
+              <button id="google-sign-in-btn" class="btn btn-danger">
+                Sign in with Google
+              </button>
             </li>
-            
+
             <!-- User info section, initially hidden -->
-            <li class="nav-item" id="user-info-container" style="display: none;">
-              <img id="user-photo" width="30" height="30" alt="User Photo">
+            <li class="nav-item" id="user-info-container" style="display: none">
+              <img id="user-photo" width="30" height="30" alt="User Photo" />
               <span id="user-name"></span>
-              <button id="sign-out-btn" class="btn btn-warning">Sign Out</button>
+              <button id="sign-out-btn" class="btn btn-warning">
+                Sign Out
+              </button>
             </li>
           </ul>
         </div>
@@ -70,13 +74,23 @@
 
     <div class="container-fluid px-5">
       <div class="row">
+        <h5>Book Title Extractor</h5>
+        <p>Upload multiple book cover images to extract their titles:</p>
+      </div>
+      <div class="row">
         <div class="col-sm-2"></div>
         <div class="col-sm-8">
-          <h5>Book Title Extractor</h5>
-          <p>Upload multiple book cover images to extract their titles:</p>
           <div class="d-flex gap-5">
-            <input class="form-control" id="imageInput" type="file" accept="image/*" multiple />
-            <button class="btn btn-outline-danger btn-sm d-none" id="btnClear">Clear</button>
+            <input
+              class="form-control"
+              id="imageInput"
+              type="file"
+              accept="image/*"
+              multiple
+            />
+            <button class="btn btn-outline-danger btn-sm d-none" id="btnClear">
+              Clear
+            </button>
           </div>
         </div>
       </div>
@@ -97,7 +111,7 @@
               </thead>
               <tbody id="resultsTable">
                 <!-- Extracted results will appear here -->
-                 <!-- <tr>
+                <!-- <tr>
                   <td>1</td>
                   <td><img /></td>
                   <td><div class="book-extractor-loader-container">
@@ -110,21 +124,11 @@
         </div>
       </div>
     </div>
-<script src="./js/script.js"></script>
-<script src="./js/book-extractor.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/book-extractor.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
       crossorigin="anonymous"
     ></script>
     <script src="./js/auth.js"></script>
