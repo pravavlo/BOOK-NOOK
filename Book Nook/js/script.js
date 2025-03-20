@@ -8,13 +8,13 @@ window.addEventListener("load", function () {
   });
 });
 
-//const baseUrl = "file:///C:/All%20Files/FlexTecs/BOOK-NOOK/Book%20Nook/";
+
 const baseUrl = window.location.hostname;
 
 function viewBook(isFromIndex, event, index) {
   if (isFromIndex) {
     const bookData = {
-      id: index,
+      id: event.target.getAttribute("book-id"),
       title: event.target.getAttribute("book-title"),
       author: event.target.getAttribute("book-author"),
       img: event.target.getAttribute("book-thumbnail"),
@@ -51,10 +51,10 @@ function addOrRemoveBook(isFromIndex, event, index) {
     return;
   }
   const bookData = {
-    id: index,
+    id: event.target.getAttribute("book-id"),
     title: event.target.getAttribute("book-title"),
     author: event.target.getAttribute("book-author"),
-    img: event.target.getAttribute("book-thumbnail"),
+    imageUrl: event.target.getAttribute("book-thumbnail"),
     pageCount: event.target.getAttribute("book-page-count"),
   };
   //Save the book to localStorage for transfer to MainView.html
@@ -66,9 +66,29 @@ function addOrRemoveBook(isFromIndex, event, index) {
     event.target.classList.replace("btn-danger", "btn-primary");
   } else {
     storedBooks.push(bookData);
+    fetch("http://localhost:8080/api/books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to save book");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Book saved:", data);
+      })
+      .catch((error) => {
+        console.error("Error saving book:", error);
+      });
     alert(`Book "${bookData.title}" added!`);
     event.target.innerHTML = "Remove";
     event.target.classList.replace("btn-primary", "btn-danger");
+
   }
   localStorage.setItem("books", JSON.stringify(storedBooks));
 }

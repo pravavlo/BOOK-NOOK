@@ -29,14 +29,18 @@ document.getElementById("bookForm").addEventListener("submit", async function (e
     }
 
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("author", author);
-    formData.append("pageCount", pageCount);
+    const bookData = {
+        title: title,
+        author: author,
+        pageCount: pageCount
+    };
+    
+    // Convert book data to a JSON string
+    formData.append("book", new Blob([JSON.stringify(bookData)], { type: "application/json" }));
     if (finalImageFile) {
         formData.append("image", finalImageFile);
     }
-
-    fetch("http://localhost:8080/createBooks", {
+    fetch("http://localhost:8080/api/books/createBooks", {
         method: "POST",
         body: formData
     })

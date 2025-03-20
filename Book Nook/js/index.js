@@ -92,7 +92,7 @@ const handleSubmit = (event) => {
                       <a href="#" class="btn btn-primary btn-sm w-100 text-nowrap" book-title="${book.volumeInfo.title
               }" book-author="${book.volumeInfo.authors
               }" book-page-count="${book.volumeInfo.pageCount
-              }" book-description="${description}" book-thumbnail="${bookImage}" id="btnView${index}" onclick="viewBook(true, event, ${index})">View</a>
+              }" book-description="${description}" book-thumbnail="${bookImage}" book-id="${book.id}" id="btnView${index}" onclick="viewBook(true, event, ${index})">View</a>
                     </div>
                     <div class="col-6">
                       <button class="btn ${booksFromLocalStorage
@@ -100,7 +100,7 @@ const handleSubmit = (event) => {
                 .includes(book.volumeInfo.title)
                 ? "btn-danger"
                 : "btn-primary"
-              } btn-sm w-100 add-btn text-nowrap" id="btnDelete${index}" onclick="addOrRemoveBook(true, event, ${index})"  book-title="${book.volumeInfo.title
+              } btn-sm w-100 add-btn text-nowrap" id="btnDelete${index}" onclick="addOrRemoveBook(true, event, ${index})" book-id="${book.id}" book-title="${book.volumeInfo.title
               }" 
                                 book-author="${book.volumeInfo.authors
                 ? book.volumeInfo.authors.join(", ")
@@ -204,7 +204,7 @@ const handleSubmit = (event) => {
                     <a href="#" class="btn btn-primary btn-sm w-100 text-nowrap" book-title="${book.volumeInfo.title
               }" book-author="${book.volumeInfo.authors
               }" book-page-count="${book.volumeInfo.pageCount
-              }" book-description="${description}" book-thumbnail="${bookImage}" id="btnView${index}" onclick="viewBook(true, event, ${index})">View</a>
+              }" book-description="${description}" book-thumbnail="${bookImage}" book-id="${book.id}" id="btnView${index}" onclick="viewBook(true, event, ${index})">View</a>
                   </div>
                   <div class="col-6">
                     <button class="btn ${booksFromLocalStorage
@@ -212,7 +212,7 @@ const handleSubmit = (event) => {
                 .includes(book.volumeInfo.title)
                 ? "btn-danger"
                 : "btn-primary"
-              } btn-sm w-100 add-btn text-nowrap" id="btnDelete${index}" onclick="addOrRemoveBook(true, event, ${index})"  book-title="${book.volumeInfo.title
+              } btn-sm w-100 add-btn text-nowrap" id="btnDelete${index}" onclick="addOrRemoveBook(true, event, ${index})" book-id="${book.id}" book-title="${book.volumeInfo.title
               }" 
                               book-author="${book.volumeInfo.authors
                 ? book.volumeInfo.authors.join(", ")
