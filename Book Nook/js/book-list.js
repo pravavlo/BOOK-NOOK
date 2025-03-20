@@ -36,7 +36,7 @@ if (storedBooks.length > 0) {
   
   });
 } else {
-  bookListDiv.innerHTML = "<p>No books added yet.</p>";
+  bookListDiv.innerHTML = `<div class="d-flex gap-2 align-items-center justify-content-center text-primary my-5 py-5"><h5 class="p-5 rounded text-center bg-light">No books have been added yet.</h5></div>`;
 }
 
 async function fetchBooksFromAPI() {

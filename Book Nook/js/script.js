@@ -97,6 +97,7 @@ function addOrRemoveBook(isFromIndex, event, index) {
 window.addEventListener("load", function () {
   var requestedBooks = [
     {
+      id: 1,
       userName: "Adam Rockers",
       userEmail: "adam@test.com",
       userPhoto: "https://placehold.co/150",

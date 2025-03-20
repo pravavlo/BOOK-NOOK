@@ -35,7 +35,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <div class="collapse navbar-collapse text-end" id="navbarTogglerDemo02">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <a class="nav-link" href="index.html">Book Search</a>
@@ -44,50 +44,128 @@
               <a class="nav-link" href="book-list.html">Added Books</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="create-Book.html">Create Book</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="book-extractor.html">Books Extractor</a>
             </li>
             <li class="nav-item">
-              <button id="google-sign-in-btn" class="btn btn-danger">Sign in with Google</button>
+              <a class="nav-link" href="book-request.html">Books request</a>
             </li>
-            
+            <li class="nav-item ms-md-5">
+              <button id="google-sign-in-btn" class="btn btn-danger btn-sm mt-3 mt-md-0">
+                Sign in with Google
+              </button>
+            </li>
+
             <!-- User info section, initially hidden -->
-            <li class="nav-item" id="user-info-container" style="display: none;">
-              <img id="user-photo" width="30" height="30" alt="User Photo">
+            <li class="nav-item" id="user-info-container" style="display: none">
+              <img id="user-photo" width="30" height="30" alt="User Photo" />
               <span id="user-name"></span>
-              <button id="sign-out-btn" class="btn btn-warning">Sign Out</button>
+              <button id="sign-out-btn" class="btn btn-warning">
+                Sign Out
+              </button>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-
     <div class="container-fluid px-5">
-      <div class="row g-0">
-        <div class="col-md-4 text-center p-2">
-          <img
-            src="https://placehold.co/600x400/orange/white"
-            class="img-fluid rounded-start book-thumbnail"
-            alt="..."
-          />         
-        </div>
-        <div class="col-md-8 p-2">
-          
-          <div class="text-end btn-remove">
-            <button class="btn btn-danger btn-sm">Remove</button>
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+          <div class="row p-2 bg-light rounded-4">
+            <div class="col-md-auto text-center p-2">
+              <img
+                src="https://placehold.co/600x400/orange/white"
+                class="img-fluid rounded-start book-thumbnail"
+                alt="..."
+              />
+            </div>
+            <div class="col p-2">
+              <div class="text-end btn-remove">
+                <button class="btn btn-danger btn-sm">Remove</button>
+              </div>
+              <h5 class="book-title">Card title</h5>
+              <p class="">
+                <small class="text-body-secondary book-author"
+                  >Last updated 3 mins ago</small
+                >
+              </p>
+              <p>
+                <small class="text-body-secondary book-page-count"
+                  >Last updated 3 mins ago</small
+                >
+                <small>pages</small>
+              </p>
+              <hr />
+              <p class="book-description overflow-y-auto">
+                This is a wider card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little
+                bit longer.
+              </p>
+            </div>
           </div>
-          <h5 class="book-title">Card title</h5>
-          <p class="">
-            <small class="text-body-secondary book-author">Last updated 3 mins ago</small>
-          </p>
-          <p >
-            <small class="text-body-secondary book-page-count">Last updated 3 mins ago</small> <small>pages</small>
-          </p>
-          <hr>
-          <p class="book-description">
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
-          </p>
-          
         </div>
       </div>
     </div>
@@ -96,16 +174,6 @@
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
       crossorigin="anonymous"
     ></script>
     <script src="./js/auth.js"></script>

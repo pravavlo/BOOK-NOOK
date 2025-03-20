@@ -105,7 +105,7 @@ body {
   }
 
 /* BOOK LIST CSS */
-.book-list {
+.book-list, .book-request-list {
   max-width: 800px;
   margin: 20px auto;
 }
@@ -126,4 +126,12 @@ body {
 }
 .book-details {
   flex-grow: 1;
+}
+.book-description{
+  height: 55vh
+}
+@media only screen and (max-width: 600px) {
+  .book-description{
+    height: 30vh
+  }
 }
